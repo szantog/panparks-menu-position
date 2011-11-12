@@ -409,6 +409,16 @@ function menu_position_translated_menu_link_alter(&$item, &$map) {
         $item['localized_options']['attributes']['class'][] = 'active';
       }
       break;
+    default:
+      if ($item['module'] == 'menu_position') {
+        $menu_item = menu_position_get_link($item['link_path']);
+        // We need this, because dynamicaly created menu items lost it's title
+        if (!empty($menu_item['title'])) {
+          $item['title'] = $menu_item['title'];
+          $item['href'] = $menu_item['href'];
+          $item['hidden'] = 1;
+        }
+      }
   }
 }
 
